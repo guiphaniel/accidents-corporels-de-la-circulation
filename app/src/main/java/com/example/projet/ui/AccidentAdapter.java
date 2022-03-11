@@ -20,61 +20,47 @@ import java.util.ArrayList;
 public class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapter.ViewHolder> {
 
     private ArrayList<Accident> accidents;
-    private Context context;
 
-    protected class ViewHolder extends RecyclerView.ViewHolder {
+    public AccidentAdapter() {
+        accidents = new ArrayList<>();
+    }
+
+    public void setAccidents(ArrayList<Accident> accidents) {
+        this.accidents = accidents;
+        notifyDataSetChanged();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tv;
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
-            tv = view.findViewById(R.id.textView);
+            tv = (TextView) view.findViewById(R.id.textView);
         }
     }
 
-    public AccidentAdapter(Context context, ArrayList<Accident> users) {
-        this.context = context;
-        this.accidents = users;
-    }
-
+    // Create new views (invoked by the layout manager)
     @NonNull
     @Override
-    public AccidentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Create a new view, which defines the UI of the list item
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_layout, parent, false);
+
+        return new ViewHolder(view);
     }
 
+    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull AccidentAdapter.ViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
+        // Get element from your dataset at this position and replace the
+        // contents of the view with that element
+        holder.tv.setText(accidents.get(position).toString());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
-    }
-
-    public View getView(int position, View convertView, ViewGroup parent) {
-        Accident accident = accidents.get(position);
-
-        ConstraintLayout layoutItem;
-        LayoutInflater mInflater = LayoutInflater.from(context);
-        //(1) : Réutilisation du layout
-        if (convertView == null) {
-            layoutItem = (ConstraintLayout) mInflater.inflate(R.layout.item_layout, parent, false);
-        } else {
-            layoutItem = (ConstraintLayout) convertView;
-        }
-
-        ViewHolder viewHolder = (ViewHolder) layoutItem.getTag();
-
-        viewHolder.tv.setText(accident.toString());
-
-        //On retourne l'item créé.
-        return layoutItem;
+        return accidents.size();
     }
 }
