@@ -66,7 +66,12 @@ public class ApiConnectAsyncTask extends AsyncTask<Object, Void, String> {
                 JSONObject record = (JSONObject) records.get(i);
                 JSONObject fields = record.getJSONObject("fields");
 
-                tmpAccidents.add(new Accident(fields.getString("num_acc"), fields.getString("lat"), fields.getString("long")));
+                // if some fields are empty, catch
+                try {
+                    tmpAccidents.add(new Accident(fields.getString("num_acc"), fields.getString("lat"), fields.getString("long")));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         } catch (JSONException e) {
             e.printStackTrace();
