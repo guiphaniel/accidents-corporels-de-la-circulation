@@ -74,18 +74,19 @@ public class ApiConnectAsyncTask extends AsyncTask<Object, Void, String> {
 
                     for(Field f : accident.getClass().getFields()) {
                         f.setAccessible(true);
-                        try {
-                            if(f.getName() != "lon") // checking for lon is mandatory, as long is already used as a type
+                        String name = f.getName();
+                        if (fields.has(name)) {
+                            if(f.getName() != "lon")  // checking for lon is mandatory, as long is already used as a type
                                 f.set(accident, fields.getString(f.getName()));
                             else
                                 f.set(accident, fields.getString("long"));
-                        } catch (IllegalAccessException e) {
-                            e.printStackTrace();
+                        } else {
+                            f.set(accident, "Inconnu(e)");
                         }
                     }
 
                     tmpAccidents.add(accident);
-                } catch (JSONException e) {
+                } catch (JSONException | IllegalAccessException e) {
                     Log.e("json_parsing", e.getMessage());
                 }
             }
