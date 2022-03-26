@@ -67,7 +67,7 @@ public abstract class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapt
         // contents of the view with that element
         Accident accident = accidents.get(position);
 
-        holder.tvLocation.setText(accident.adr);
+        holder.tvLocation.setText(accident.adr + ", dpt : " + accident.dep);
         holder.tvDate.setText(String.join("-", accident.jour, accident.mois, accident.an));
 
         holder.ivGrav.setImageURI(null);

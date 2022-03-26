@@ -55,13 +55,12 @@ public class HomeFragment extends Fragment {
         AccidentAdapter accidentAdapter = new AccidentAdapter() {
             @Override
             public void onClick(int position) {
-                Log.d("pos", String.valueOf(position));
                 Accident accident = homeViewModel.getAccidents().getValue().get(position);
 
                 // Create new fragment and transaction
                 AccidentDetailsFragment accidentDetailsFragment = AccidentDetailsFragment.newInstance(accident);
 
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack
