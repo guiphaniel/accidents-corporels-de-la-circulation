@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -69,7 +70,21 @@ public class ApiConnectAsyncTask extends AsyncTask<Object, Void, String> {
 
                 // if some fields are empty, catch
                 try {
-                    tmpAccidents.add(new Accident(fields.getString("num_acc"), fields.getString("lat"), fields.getString("long")));
+                    Accident accident = new Accident();
+
+                    for(Field f : accident.getClass().getFields()) {
+                        f.setAccessible(true);
+                        try {
+                            if(f.getName() != "lon") // checking for lon is mandatory, as long is already used as a type
+                                f.set(accident, fields.getString(f.getName()));
+                            else
+                                f.set(accident, fields.getString("long"));
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    tmpAccidents.add(accident);
                 } catch (JSONException e) {
                     Log.e("json_parsing", e.getMessage());
                 }

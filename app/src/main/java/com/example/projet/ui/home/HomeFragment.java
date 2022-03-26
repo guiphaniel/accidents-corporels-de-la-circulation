@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
                 geofilter = "";
 
             homeViewModel.getAccidents().setValue(new ArrayList< Accident >());
-            homeViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
+            homeViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
             swipeRefresh.setRefreshing(false);
         });
 
@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                homeViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=" + 10*page + "&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
+                homeViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=" + 10*page + "&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
             }
         };
 
