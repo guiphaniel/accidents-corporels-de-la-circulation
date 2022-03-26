@@ -19,7 +19,7 @@ public class Accident implements Serializable {
     public String surf;
     public String catv;
 
-    private String grav;
+    public String grav;
 
     @Override
     public String toString() {

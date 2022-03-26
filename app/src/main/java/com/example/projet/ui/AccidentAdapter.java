@@ -1,14 +1,15 @@
 package com.example.projet.ui;
 
-import android.content.Context;
+import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projet.R;
@@ -32,12 +33,16 @@ public abstract class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapt
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv;
+        public TextView tvLocation;
+        public TextView tvDate;
+        public ImageView ivGrav;
 
         public ViewHolder(@NonNull View view, AccidentAdapter adapter) {
             super(view);
 
-            tv = (TextView) view.findViewById(R.id.textView);
+            ivGrav = (ImageView) view.findViewById(R.id.ivGrav);
+            tvLocation = (TextView) view.findViewById(R.id.tvDate);
+            tvDate = (TextView) view.findViewById(R.id.tvLocation);
 
             itemView.setOnClickListener(view1 -> {adapter.onClick(getAdapterPosition());});
         }
@@ -55,11 +60,29 @@ public abstract class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapt
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull AccidentAdapter.ViewHolder holder, int position) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        holder.tv.setText(accidents.get(position).toString());
+        Accident accident = accidents.get(position);
+
+        holder.tvLocation.setText(accident.adr);
+        holder.tvDate.setText(String.join("-", accident.jour, accident.mois, accident.an));
+
+        holder.ivGrav.setImageURI(null);
+        Uri imgUri;
+        String g = accident.grav;
+        if(g.contains("Tué")) {
+            imgUri=Uri.parse(String.valueOf("android.resource://com.example.projet/" + R.drawable.dead));
+            holder.ivGrav.setImageURI(imgUri);
+        } else if(g.contains("Blessé")) {
+            imgUri=Uri.parse("android.resource://com.example.projet/" + R.drawable.hurt);
+            holder.ivGrav.setImageURI(imgUri);
+        } else {
+            imgUri=Uri.parse("android.resource://com.example.projet/" + R.drawable.unhurt);
+            holder.ivGrav.setImageURI(imgUri);
+        }
     }
 
     @Override
