@@ -1,4 +1,4 @@
-package com.example.projet.ui.home;
+package com.example.projet.ui.list;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;

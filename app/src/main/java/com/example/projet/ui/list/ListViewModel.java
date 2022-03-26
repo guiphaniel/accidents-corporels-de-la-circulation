@@ -1,8 +1,5 @@
-package com.example.projet.ui.home;
+package com.example.projet.ui.list;
 
-import android.location.Location;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -11,11 +8,11 @@ import com.example.projet.model.Accident;
 
 import java.util.ArrayList;
 
-public class HomeViewModel extends ViewModel {
+public class ListViewModel extends ViewModel {
 
     private final MutableLiveData<ArrayList<Accident>> accidents;
 
-    public HomeViewModel() {
+    public ListViewModel() {
         accidents = new MutableLiveData<>();
     }
 

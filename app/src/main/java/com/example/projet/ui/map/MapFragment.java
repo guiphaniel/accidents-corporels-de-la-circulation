@@ -1,10 +1,9 @@
-package com.example.projet.ui.dashboard;
+package com.example.projet.ui.map;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.projet.R;
-import com.example.projet.databinding.FragmentDashboardBinding;
+import com.example.projet.databinding.FragmentMapBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,7 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class DashboardFragment extends Fragment {
+public class MapFragment extends Fragment {
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -41,18 +40,18 @@ public class DashboardFragment extends Fragment {
         }
     };
 
-    private FragmentDashboardBinding binding;
+    private FragmentMapBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        MapViewModel mapViewModel =
+                new ViewModelProvider(this).get(MapViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentMapBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         /*final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
+        mapViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
         return root;
     }
 
