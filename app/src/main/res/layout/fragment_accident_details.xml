@@ -9,7 +9,11 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/ivGrav2"
@@ -38,10 +42,10 @@
             android:id="@+id/tvLon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvAdr"
             app:layout_constraintTop_toTopOf="@+id/textView"
             app:layout_constraintVertical_bias="0.0" />
@@ -61,10 +65,10 @@
             android:id="@+id/tvLat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvLon"
             app:layout_constraintTop_toTopOf="@+id/textView3" />
 
@@ -83,10 +87,10 @@
             android:id="@+id/tvAdr"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvDate2"
             app:layout_constraintTop_toTopOf="@+id/textView5" />
 
@@ -105,10 +109,10 @@
             android:id="@+id/tvDate2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvLum"
             app:layout_constraintTop_toTopOf="@+id/textView7" />
 
@@ -127,10 +131,10 @@
             android:id="@+id/tvLum"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView9"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvAtm"
             app:layout_constraintTop_toTopOf="@+id/textView9" />
 
@@ -149,10 +153,10 @@
             android:id="@+id/tvAtm"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvSurf"
             app:layout_constraintTop_toTopOf="@+id/textView11" />
 
@@ -171,10 +175,10 @@
             android:id="@+id/tvNum_acc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvLat"
             app:layout_constraintTop_toTopOf="@+id/textView13" />
 
@@ -193,10 +197,10 @@
             android:id="@+id/tvSurf"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView15"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvCatv"
             app:layout_constraintTop_toTopOf="@+id/textView15" />
 
@@ -204,7 +208,7 @@
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:text="Catégorie du véhicule :"
@@ -217,10 +221,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="64dp"
-            android:text="TextView"
             android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/textView17"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView17"
             app:layout_constraintTop_toTopOf="@+id/textView17"
             app:layout_constraintVertical_bias="0.0" />
