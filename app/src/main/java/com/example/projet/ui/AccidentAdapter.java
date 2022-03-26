@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 
 //TODO: https://developer.android.com/guide/topics/ui/layout/recyclerview
 
-public class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapter.ViewHolder> {
+public abstract class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapter.ViewHolder> {
 
     private ArrayList<Accident> accidents;
 
@@ -33,10 +34,12 @@ public class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tv;
 
-        public ViewHolder(@NonNull View view) {
+        public ViewHolder(@NonNull View view, AccidentAdapter adapter) {
             super(view);
 
             tv = (TextView) view.findViewById(R.id.textView);
+
+            itemView.setOnClickListener(view1 -> {adapter.onClick(getAdapterPosition());});
         }
     }
 
@@ -48,7 +51,7 @@ public class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapter.ViewHo
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_layout, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view, this);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
@@ -63,4 +66,6 @@ public class AccidentAdapter extends RecyclerView.Adapter<AccidentAdapter.ViewHo
     public int getItemCount() {
         return accidents.size();
     }
+
+    abstract public void onClick(int position);
 }

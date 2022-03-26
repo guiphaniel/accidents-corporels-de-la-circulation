@@ -2,12 +2,14 @@ package com.example.projet.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,7 +51,29 @@ public class HomeFragment extends Fragment {
         rV = binding.recyclerView;
         initScrollListeners();
 
-        AccidentAdapter accidentAdapter = new AccidentAdapter();
+        AccidentAdapter accidentAdapter = new AccidentAdapter() {
+            @Override
+            public void onClick(int position) {
+                Log.d("pos", String.valueOf(position));
+              /*  Accident accident = homeViewModel.getAccidents().getValue().get(position);
+
+                // Create new fragment and transaction
+                AccidentDetailsFragment accidentDetailsFragment = new AccidentDetailsFragment();
+                Bundle args = new Bundle();
+                args.putSerializable("accident", accident);
+                accidentDetailsFragment.setArguments(args);
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+                // Replace whatever is in the fragment_container view with this fragment,
+                // and add the transaction to the back stack
+                transaction.replace(((ViewGroup)getView().getParent()).getId(), accidentDetailsFragment);
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();*/
+            }
+        };
         rV.setAdapter(accidentAdapter);
 
         //init models observers
