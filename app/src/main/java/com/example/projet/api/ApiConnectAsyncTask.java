@@ -1,6 +1,7 @@
 package com.example.projet.api;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -70,7 +71,7 @@ public class ApiConnectAsyncTask extends AsyncTask<Object, Void, String> {
                 try {
                     tmpAccidents.add(new Accident(fields.getString("num_acc"), fields.getString("lat"), fields.getString("long")));
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Log.e("json_parsing", e.getMessage());
                 }
             }
         } catch (JSONException e) {

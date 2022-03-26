@@ -20,6 +20,7 @@ import com.example.projet.databinding.FragmentHomeBinding;
 import com.example.projet.model.Accident;
 import com.example.projet.model.SharedModel;
 import com.example.projet.ui.AccidentAdapter;
+import com.example.projet.ui.accident_details.AccidentDetailsFragment;
 
 import java.util.ArrayList;
 
@@ -55,13 +56,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(int position) {
                 Log.d("pos", String.valueOf(position));
-              /*  Accident accident = homeViewModel.getAccidents().getValue().get(position);
+                Accident accident = homeViewModel.getAccidents().getValue().get(position);
 
                 // Create new fragment and transaction
-                AccidentDetailsFragment accidentDetailsFragment = new AccidentDetailsFragment();
-                Bundle args = new Bundle();
-                args.putSerializable("accident", accident);
-                accidentDetailsFragment.setArguments(args);
+                AccidentDetailsFragment accidentDetailsFragment = AccidentDetailsFragment.newInstance(accident);
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -71,7 +69,7 @@ public class HomeFragment extends Fragment {
                 transaction.addToBackStack(null);
 
                 // Commit the transaction
-                transaction.commit();*/
+                transaction.commit();
             }
         };
         rV.setAdapter(accidentAdapter);

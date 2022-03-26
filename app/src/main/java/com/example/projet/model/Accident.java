@@ -1,6 +1,8 @@
 package com.example.projet.model;
 
-public class Accident {
+import java.io.Serializable;
+
+public class Accident implements Serializable {
     private String id;
 
     private String lat;
