@@ -13,7 +13,7 @@ public class SharedModel extends ViewModel {
     public SharedModel() {
         location = new MutableLiveData<>();
         radius = new MutableLiveData<>();
-        radius.setValue(new Integer(1000));
+        radius.setValue(new Integer(100000));
     }
     public MutableLiveData<Location> getLocation() {
         return location;
