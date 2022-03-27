@@ -3,7 +3,7 @@ package com.example.projet.ui.list;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.projet.api.ApiConnectAsyncTask;
+import com.example.projet.api.ApiConnectListAsyncTask;
 import com.example.projet.model.Accident;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public void loadAccidents(String link) {
-        new ApiConnectAsyncTask().execute(link, accidents);
+        new ApiConnectListAsyncTask().execute(link, accidents);
     }
 
     public MutableLiveData<ArrayList<Accident>> getAccidents() {

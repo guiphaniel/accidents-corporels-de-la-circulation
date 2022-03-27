@@ -2,13 +2,8 @@ package com.example.projet.model;
 
 import android.location.Location;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.example.projet.api.ApiConnectAsyncTask;
-
-import java.util.ArrayList;
 
 public class SharedModel extends ViewModel {
 

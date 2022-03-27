@@ -21,7 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ApiConnectAsyncTask extends AsyncTask<Object, Void, String> {
+public class ApiConnectListAsyncTask extends AsyncTask<Object, Void, String> {
     private MutableLiveData<ArrayList<Accident>> accidents;
     private AccidentAdapter adapter;
 
