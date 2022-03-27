@@ -1,6 +1,10 @@
 package com.example.projet.ui.map;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -82,20 +88,42 @@ public class MapFragment extends Fragment {
             final int[] lastZoom = {-1};
 
             mapViewModel.getClusters().observe(getViewLifecycleOwner(), clusters -> {
+                addMyPosMarker(googleMap);
                 for(Cluster c : clusters) {
                     LatLng myPos = new LatLng(c.getLocation().latitude, c.getLocation().longitude);
-                    Marker marker = googleMap.addMarker(new MarkerOptions().position(myPos).title(String.valueOf(c.getCount())));
+
+                    BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.accident);
+                    int width = 50;
+                    int height = bitmap.getIntrinsicHeight() * width / bitmap.getIntrinsicWidth();
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap.getBitmap(), width, height, false);
+
+                    Marker marker = googleMap.addMarker(new MarkerOptions().position(myPos).title(String.valueOf(c.getCount())).icon(BitmapDescriptorFactory.fromBitmap(scaledBitmap)));
                     markers.put(marker, null);
                 }
             });
 
             mapViewModel.getAccidents().observe(getViewLifecycleOwner(), accidents -> {
+                addMyPosMarker(googleMap);
                 for(Accident a : accidents) {
                     if (a.getLat().equals("Inconnu(e)") || a.getLon().equals("Inconnu(e)"))
                         continue;
 
                     LatLng pos = new LatLng(Double.parseDouble(a.getLat()), Double.parseDouble(a.getLon()));
-                    Marker marker = googleMap.addMarker(new MarkerOptions().position(pos).title(a.num_acc));
+
+                    BitmapDrawable bitmap;
+                    String g = a.grav;
+                    if(g.contains("Tué")) {
+                        bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.dead);
+                    } else if(g.contains("Blessé")) {
+                        bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.hurt);
+                    } else {
+                        bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.unhurt);
+                    }
+                    int width = 50;
+                    int height = bitmap.getIntrinsicHeight() * width / bitmap.getIntrinsicWidth();
+                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap.getBitmap(), width, height, false);
+
+                    Marker marker = googleMap.addMarker(new MarkerOptions().position(pos).title(a.num_acc).icon(BitmapDescriptorFactory.fromBitmap(scaledBitmap)));
                     markers.put(marker, a);
                 }
             });
@@ -126,22 +154,30 @@ public class MapFragment extends Fragment {
             });
 
 
-            Location position = sharedModel.getLocation().getValue();
-            if(position != null) {
-                LatLng myPos = new LatLng(position.getLatitude(), position.getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(myPos).title("Vous êtes ici"));
+
+            LatLng myPos = addMyPosMarker(googleMap);
+            if (myPos != null)
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPos));
-            }
-
-
-
-
-            LatLng target = googleMap.getCameraPosition().target;
-            float zoom = googleMap.getCameraPosition().zoom;
         }
 
         private String latToString(double lat, double lon) {
             return "(" + lat + "," + lon + ")";
+        }
+
+        private LatLng addMyPosMarker(GoogleMap googleMap) {
+            Location position = sharedModel.getLocation().getValue();
+            LatLng myPos = new LatLng(position.getLatitude(), position.getLongitude());
+            if(myPos == null)
+                return null;
+
+            BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.my_position);
+            int width = 50;
+            int height = bitmap.getIntrinsicHeight() * width / bitmap.getIntrinsicWidth();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap.getBitmap(), width, height, false);
+
+            googleMap.addMarker(new MarkerOptions().position(myPos).title("Vous êtes ici").icon(BitmapDescriptorFactory.fromBitmap(scaledBitmap)));
+
+            return myPos;
         }
     };
 
