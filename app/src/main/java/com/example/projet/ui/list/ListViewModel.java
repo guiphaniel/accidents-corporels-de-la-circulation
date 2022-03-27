@@ -14,6 +14,7 @@ public class ListViewModel extends ViewModel {
 
     public ListViewModel() {
         accidents = new MutableLiveData<>();
+        accidents.setValue(new ArrayList< Accident >());
     }
 
     public void loadAccidents(String link) {

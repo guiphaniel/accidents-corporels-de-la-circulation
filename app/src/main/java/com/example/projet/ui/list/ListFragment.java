@@ -44,6 +44,7 @@ public class ListFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                listViewModel.getAccidents().setValue(new ArrayList< Accident >());
                 ((MainActivity) requireActivity()).updateLocation();
             }
         });
@@ -83,10 +84,14 @@ public class ListFragment extends Fragment {
             else
                 geofilter = "";
 
-            listViewModel.getAccidents().setValue(new ArrayList< Accident >());
             listViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
             swipeRefresh.setRefreshing(false);
         });
+
+        // init accidents
+        if(listViewModel.getAccidents().getValue().isEmpty()){
+            ((MainActivity) requireActivity()).updateLocation();
+        }
 
         return root;
     }
@@ -107,12 +112,6 @@ public class ListFragment extends Fragment {
         };
 
         rV.addOnScrollListener(scrollListener);
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        ((MainActivity) requireActivity()).updateLocation();
     }
 
     @Override
