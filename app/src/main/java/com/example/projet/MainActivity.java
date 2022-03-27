@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import com.example.projet.databinding.ActivityMainBinding;
 import com.example.projet.model.SharedModel;
+import com.example.projet.ui.accident_details.AccidentDetailsFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -88,6 +90,17 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 model.getLocation().postValue(null);
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().getFragments().get(0).getChildFragmentManager().findFragmentByTag("details");
+        if (fragment instanceof AccidentDetailsFragment) {
+            AccidentDetailsFragment f = (AccidentDetailsFragment) fragment;
+            f.hide();
+        } else {
+            super.onBackPressed();
         }
     }
 }

@@ -21,7 +21,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class ApiConnectListAsyncTask extends AsyncTask<Object, Void, String> {
+public class ApiConnectAccidentsAsyncTask extends AsyncTask<Object, Void, String> {
     private MutableLiveData<ArrayList<Accident>> accidents;
     private AccidentAdapter adapter;
 
@@ -76,13 +76,20 @@ public class ApiConnectListAsyncTask extends AsyncTask<Object, Void, String> {
                         f.setAccessible(true);
                         String name = f.getName();
                         if (fields.has(name)) {
-                            if(f.getName() != "lon")  // checking for lon is mandatory, as long is already used as a type
-                                f.set(accident, fields.getString(f.getName()));
-                            else
-                                f.set(accident, fields.getString("long"));
+                            f.set(accident, fields.getString(f.getName()));
                         } else {
                             f.set(accident, "Inconnu(e)");
                         }
+                    }
+
+                    //coordinates
+                    if(fields.has("coordonnees")) {
+                        JSONArray coo = fields.getJSONArray("coordonnees");
+                        accident.setLat(coo.getString(0));
+                        accident.setLon(coo.getString(1));
+                    } else {
+                        accident.setLat("Inconnu(e)");
+                        accident.setLon("Inconnu(e)");
                     }
 
                     tmpAccidents.add(accident);

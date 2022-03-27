@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class Accident implements Serializable {
     public String num_acc; // id
 
-    public String lat;
-    public String lon;
+    private String lat;
+    private String lon;
     public String adr;
     public String dep;
 
@@ -20,6 +20,22 @@ public class Accident implements Serializable {
     public String catv;
 
     public String grav;
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
 
     @Override
     public String toString() {

@@ -57,15 +57,17 @@ public class ListFragment extends Fragment {
             public void onClick(int position) {
                 Accident accident = listViewModel.getAccidents().getValue().get(position);
 
-                // Create new fragment and transaction
+                // Create new fragment
                 AccidentDetailsFragment accidentDetailsFragment = AccidentDetailsFragment.newInstance(accident);
 
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
                 // and add the transaction to the back stack
-                transaction.replace(((ViewGroup)getView().getParent()).getId(), accidentDetailsFragment);
-                transaction.addToBackStack(null);
+                Fragment listFragment = getParentFragmentManager().getFragments().get(0);
+
+                transaction.hide(listFragment);
+                transaction.add(((ViewGroup)getView().getParent()).getId(), accidentDetailsFragment, "details");
 
                 // Commit the transaction
                 transaction.commit();

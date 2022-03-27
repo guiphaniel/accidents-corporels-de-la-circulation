@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,8 +55,8 @@ public class AccidentDetailsFragment extends Fragment {
         }
 
         binding.tvNumAcc.setText(accident.num_acc);
-        binding.tvLat.setText(accident.lat);
-        binding.tvLon.setText(accident.lon);
+        binding.tvLat.setText(accident.getLat());
+        binding.tvLon.setText(accident.getLon());
         binding.tvAdr.setText(accident.adr);
         binding.tvDate2.setText(String.format("%s-%s-%s", accident.jour, accident.mois, accident.an));
         binding.tvLum.setText(accident.lum);
@@ -70,5 +71,21 @@ public class AccidentDetailsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void hide() {
+
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack
+        Fragment sourceFragment = getParentFragmentManager().getFragments().get(0);
+
+        transaction.remove(this);
+        transaction.show(sourceFragment);
+
+        // Commit the transaction
+        transaction.commit();
+
     }
 }
