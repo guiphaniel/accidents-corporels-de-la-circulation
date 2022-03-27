@@ -1,9 +1,12 @@
 package com.example.projet.ui.map;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.HashMap;
 
@@ -88,7 +92,6 @@ public class MapFragment extends Fragment {
             final int[] lastZoom = {-1};
 
             mapViewModel.getClusters().observe(getViewLifecycleOwner(), clusters -> {
-                addMyPosMarker(googleMap);
                 for(Cluster c : clusters) {
                     LatLng myPos = new LatLng(c.getLocation().latitude, c.getLocation().longitude);
 
@@ -103,7 +106,6 @@ public class MapFragment extends Fragment {
             });
 
             mapViewModel.getAccidents().observe(getViewLifecycleOwner(), accidents -> {
-                addMyPosMarker(googleMap);
                 for(Accident a : accidents) {
                     if (a.getLat().equals("Inconnu(e)") || a.getLon().equals("Inconnu(e)"))
                         continue;
@@ -133,13 +135,17 @@ public class MapFragment extends Fragment {
                 int currentZoom = (int) ((googleMap.getCameraPosition().zoom / maxZoom) * 100 / 10);
                 if (lastZoom[0] != currentZoom) {
                     lastZoom[0] = currentZoom;
+
+                    addMyPosMarker(googleMap);
+                    if(!checkForInternetConnection())
+                        return;
+
                     LatLngBounds bounds = googleMap.getProjection().getVisibleRegion().latLngBounds;
 
                     for(Marker m : markers.keySet()) {
                         m.remove();
                     }
                     markers.clear();
-                    googleMap.clear();
 
                     String geofilterPolygon = "&geofilter.polygon=" + String.join(",", latToString(bounds.northeast.latitude, bounds.northeast.longitude),latToString(bounds.southwest.latitude, bounds.northeast.longitude),latToString(bounds.southwest.latitude,bounds.southwest.longitude), latToString(bounds.northeast.latitude,bounds.southwest.longitude));
 
@@ -166,9 +172,10 @@ public class MapFragment extends Fragment {
 
         private LatLng addMyPosMarker(GoogleMap googleMap) {
             Location position = sharedModel.getLocation().getValue();
-            LatLng myPos = new LatLng(position.getLatitude(), position.getLongitude());
-            if(myPos == null)
+            if (position == null)
                 return null;
+
+            LatLng myPos = new LatLng(position.getLatitude(), position.getLongitude());
 
             BitmapDrawable bitmap = (BitmapDrawable)getResources().getDrawable(R.drawable.my_position);
             int width = 50;
@@ -180,6 +187,16 @@ public class MapFragment extends Fragment {
             return myPos;
         }
     };
+
+    private boolean checkForInternetConnection() {
+        ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        Snackbar.make(getView(), "Vous n'êtes pas connecté à internet.", Snackbar.LENGTH_SHORT).show();
+        return false;
+    }
 
     private FragmentMapBinding binding;
 

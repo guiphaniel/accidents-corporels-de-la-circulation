@@ -1,6 +1,8 @@
 package com.example.projet.ui.list;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.example.projet.model.Accident;
 import com.example.projet.model.SharedModel;
 import com.example.projet.ui.AccidentAdapter;
 import com.example.projet.ui.accident_details.AccidentDetailsFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -81,6 +84,9 @@ public class ListFragment extends Fragment {
         });
 
         sharedModel.getLocation().observe(getViewLifecycleOwner(), location -> {
+            if(!checkForInternetConnection())
+                return;
+
             if(location != null)
                 geofilter = "&geofilter.distance=" + location.getLatitude() + "%2C" + location.getLongitude() + "%2C" + sharedModel.getRadius().getValue();
             else
@@ -107,6 +113,8 @@ public class ListFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if(!checkForInternetConnection())
+                    return;
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
                 listViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=" + 10*page + "&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
@@ -114,6 +122,16 @@ public class ListFragment extends Fragment {
         };
 
         rV.addOnScrollListener(scrollListener);
+    }
+
+    private boolean checkForInternetConnection() {
+        ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        Snackbar.make(getView(), "Vous n'êtes pas connecté à internet.", Snackbar.LENGTH_SHORT).show();
+        return false;
     }
 
     @Override
