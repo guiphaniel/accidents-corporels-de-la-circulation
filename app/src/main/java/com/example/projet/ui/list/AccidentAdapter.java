@@ -1,4 +1,4 @@
-package com.example.projet.ui;
+package com.example.projet.ui.list;
 
 import android.net.Uri;
 import android.os.Build;

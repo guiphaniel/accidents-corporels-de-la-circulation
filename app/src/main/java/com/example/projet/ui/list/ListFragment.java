@@ -22,7 +22,6 @@ import com.example.projet.MainActivity;
 import com.example.projet.databinding.FragmentListBinding;
 import com.example.projet.model.Accident;
 import com.example.projet.model.SharedModel;
-import com.example.projet.ui.AccidentAdapter;
 import com.example.projet.ui.accident_details.AccidentDetailsFragment;
 import com.google.android.material.snackbar.Snackbar;
 

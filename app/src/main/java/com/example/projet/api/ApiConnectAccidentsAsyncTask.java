@@ -6,7 +6,7 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.projet.model.Accident;
-import com.example.projet.ui.AccidentAdapter;
+import com.example.projet.ui.list.AccidentAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;

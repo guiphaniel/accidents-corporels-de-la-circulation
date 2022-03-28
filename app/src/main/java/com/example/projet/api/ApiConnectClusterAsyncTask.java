@@ -1,14 +1,10 @@
 package com.example.projet.api;
 
-import android.location.Location;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.projet.model.Accident;
 import com.example.projet.model.Cluster;
-import com.example.projet.ui.AccidentAdapter;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONArray;
@@ -18,7 +14,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
