@@ -1,6 +1,7 @@
 package com.example.projet.ui.list;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -34,6 +36,7 @@ public class ListFragment extends Fragment {
     private RecyclerView rV;
     private SwipeRefreshLayout swipeRefresh;
     private String geofilter;
+    private String refine;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -87,16 +90,22 @@ public class ListFragment extends Fragment {
             if(!checkForInternetConnection())
                 return;
 
-            if(location != null)
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+            if(location != null && sharedPreferences.getBoolean("location_switch", true))
                 geofilter = "&geofilter.distance=" + location.getLatitude() + "%2C" + location.getLongitude() + "%2C" + sharedModel.getRadius().getValue();
             else
                 geofilter = "";
 
-            listViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
+            listViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter + refine);
             swipeRefresh.setRefreshing(false);
         });
 
         // init accidents
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireActivity());
+        refine = "";
+        if(sharedPreferences.getBoolean("dep_switch", false))
+            refine = "&refine.dep_code=" + sharedPreferences.getString("dep_code", "01");
+
         if(listViewModel.getAccidents().getValue().isEmpty()){
             ((MainActivity) requireActivity()).updateLocation();
         }
@@ -117,7 +126,7 @@ public class ListFragment extends Fragment {
                     return;
                 // Triggered only when new data needs to be appended to the list
                 // Add whatever code is needed to append new items to the bottom of the list
-                listViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=" + 10*page + "&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter);
+                listViewModel.loadAccidents("https://data.opendatasoft.com//api/records/1.0/search/?dataset=accidents-corporels-de-la-circulation-millesime%40public&q=&start=" + 10*page + "&facet=Num_Acc&facet=jour&facet=mois&facet=an&facet=lum&facet=adr&facet=dep&facet=atm&facet=col&facet=lat&facet=long&facet=surf&facet=catv&facet=obs&facet=obsm&facet=grav" + geofilter + refine);
             }
         };
 
