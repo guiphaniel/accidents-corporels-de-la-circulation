@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Projet</string>
+    <string name="title_list">Liste</string>
+    <string name="title_map">Carte</string>
+    <string name="title_settings">Paramètres</string>
+    <string name="accident_num">N° Accident :</string>
+    <string name="longitude">Longitude :</string>
+    <string name="latitude">Latitude :</string>
+    <string name="address">Adresse :</string>
+    <string name="date">Date :</string>
+    <string name="light">Lumière :</string>
+    <string name="atm_cond">Conditions atmosphériques :</string>
+    <string name="surf_cond">Etat de la surface :</string>
+    <string name="veh_cat">Catégorie du véhicule :</string>
+    <string name="pref_pos">Utiliser ma position pour la recherche</string>
+    <string name="pref_dep">Département</string>
+    <string name="pref_toggle_dep">Activer/Désactiver la recherche par département</string>
+</resources>
